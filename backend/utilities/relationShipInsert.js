@@ -24,24 +24,24 @@ let iterator = (pool)=>{
 }
 
 
-let wrapper=async(tweet,pool,callback)=>{
-    //console.log(tweet);
-    let regex = new RegExp('^RT .*$');
-    let isItARetweet = regex.test(tweet['tweet']);
-    if(isItARetweet){
-      let regex = new RegExp('@([\w\d]*)','g');
-      let user = regex.exec(tweet['tweet']);
-      user.index = user.index + 1;
-      let arrayTweet = await getuserAndTweet(user.index,tweet['tweet']);
-      let result = await getUserID(arrayTweet,pool);
-      result[0] = tweet['userID'].toString();
-      console.log(result);
-      arrayTweet = await insertRelationshipDB(result,pool);
-     // let originalID = await getOriginalID(arrayTweet,pool); 
-      callback(arrayTweet);
+let wrapper=(tweet,pool)=>{
+   return new Promise(async(res,rej)=>{
+      let regex = new RegExp('^RT .*$');
+      let isItARetweet = regex.test(tweet['tweet']);
+      if(isItARetweet){
+        let regex = new RegExp('@([\w\d]*)','g');
+        let user = regex.exec(tweet['tweet']);
+        user.index = user.index + 1;
+        let arrayTweet = await getuserAndTweet(user.index,tweet['tweet']);
+        let result = await getUserID(arrayTweet,pool);
+        result[0] = tweet['userID'].toString();
+        console.log(result);
+        let helpme = await insertRelationshipDB(result,pool);
+       // let originalID = await getOriginalID(arrayTweet,pool); 
+        res(arrayTweet);
     }
-    callback("nothing");
-   
+    res("nothing");
+   });  
 }
 
 let insertRelationshipDB = (array,pool)=>{

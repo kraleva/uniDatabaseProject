@@ -4,11 +4,11 @@ var checkfunctions = require('./checkfunctions');
 let wrapperUser = function(data,pool){
   const poolhelper = pool;
   //console.log(pool);
-  return new Promise(async(res,rej)=>{
-     cleanDataUser(data,async function(data1){
-        validateDataUser(data1,async function(data2){
+  return new Promise((res,rej)=>{
+     cleanDataUser(data, function(data1){
+        validateDataUser(data1, function(data2){
           //console.log(pool);
-          insertDataUser(data2,poolhelper,async()=>{
+          insertDataUser(data2,poolhelper,()=>{
             res(poolhelper);
             return;
           })
@@ -33,7 +33,8 @@ let insertDataUser = (data,pool,callback) =>{
                     //console.log(data.tweetID);
                     return;
                 } else {
-                    console.log('row inserted with id: ' + result.rows[0]);
+                    console.log('row inserted with');
+                    //console.log(resu.rows[0])
                     callback();
                 }
             });  

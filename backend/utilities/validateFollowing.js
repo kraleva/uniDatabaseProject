@@ -4,11 +4,11 @@ var checkfunctions = require('./checkfunctions');
 let wrapperFollowing = function(data,pool){
   var poolhelper = pool;
   //console.log(pool);
-  return new Promise(async(res,rej)=>{
-     cleanDataFollowing(data,async function(data1){
-        validateDataFollowing(data1,async function(data2){
+  return new Promise((res,rej)=>{
+     cleanDataFollowing(data,function(data1){
+        validateDataFollowing(data1,function(data2){
           //console.log(pool);
-          insertDataFollowing(data2,poolhelper,async()=>{
+          insertDataFollowing(data2,poolhelper,()=>{
             res(poolhelper);
             return;
           })
@@ -41,6 +41,7 @@ let insertDataFollowing = (data,pool,callback) =>{
                     callback();
                 } else {
                     console.log('row inserted with id: ' + result.rows[0]);
+                    //console.log(result.rows[0])
                     callback();
                 }
             });  

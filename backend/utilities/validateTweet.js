@@ -5,16 +5,15 @@ var wrapper= require('./relationShipInsert').wrapper
 let wrapperTweet = function(data,pool){
   var poolhelper = pool;
   //console.log(pool);
-  return new Promise(async(res,rej)=>{
-     cleanDataTweet(data,async function(data1){
-        validateDataTweet(data1,async function(data2){
+  return new Promise((res,rej)=>{
+     cleanDataTweet(data,function(data1){
+        validateDataTweet(data1,function(data2){
           //console.log(pool);
-          insertDataTweet(data2,poolhelper,async(data3)=>{
-           wrapper(data3,pool,async(pool)=>{
-             console.log(pool);
-             res(poolhelper)
-             return;
-            });
+          insertDataTweet(data2,poolhelper,(data3)=>{
+           wrapper(data3,pool,(pool)).then((data)=>{
+             console.log(data)
+             res();
+             })
             // /return;
           })
         })
@@ -41,7 +40,7 @@ let insertDataTweet = (data,pool,callback) =>{
                     console.log(err);
                     callback(data);
                 } else {
-                    console.log('row inserted with id: ' + result.rows[0]);
+                    console.log('row inserted TWEET');
                     callback(data);
                 }
             });  
