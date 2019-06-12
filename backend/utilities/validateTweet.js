@@ -1,18 +1,20 @@
 var bigInt = require("big-integer");
 var checkfunctions = require('./checkfunctions');
-var tweetgetOriginalId = require('./insertAdditionalInformation').tweetgetOriginalID
+var wrapper= require('./relationShipInsert').wrapper
 
 let wrapperTweet = function(data,pool){
-  const poolhelper = pool;
+  var poolhelper = pool;
   //console.log(pool);
   return new Promise(async(res,rej)=>{
      cleanDataTweet(data,async function(data1){
         validateDataTweet(data1,async function(data2){
           //console.log(pool);
           insertDataTweet(data2,poolhelper,async(data3)=>{
-            let helper = await tweetgetOriginalId(data3,pool);
-            console.log(helper);
-            res(poolhelper);
+           wrapper(data3,pool,async(pool)=>{
+             console.log(pool);
+             res(poolhelper)
+             return;
+            });
             // /return;
           })
         })
@@ -66,7 +68,7 @@ let cleanDataTweet = (data,callback)=>{
 }
 
 
-let validateDataTweet = async(data,callback)=>{
+let validateDataTweet =(data,callback)=>{
      let proof = checkfunctions.validateSerial(data,'tweetID');
      //console.log(proof);
      let proof1 = checkfunctions.validateSerial(data,'userID');

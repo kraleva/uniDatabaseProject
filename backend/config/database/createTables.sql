@@ -35,6 +35,8 @@ CREATE TABLE "tweet" (
 CREATE TABLE "relationship" (
   user1_ID BIGSERIAL NOT NULL,
   user2_ID BIGSERIAL NOT NULL,
+  user1_retweetTimes INT NOT NULL,
+  user2_retweetTimes INT NOT NULL,
   typeOfRelationship varchar(32) NOT NULL,
   PRIMARY KEY(user1_ID,user2_ID),
   FOREIGN KEY(user1_ID) REFERENCES "user"(user_ID),

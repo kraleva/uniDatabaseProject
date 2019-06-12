@@ -2,7 +2,7 @@ var bigInt = require("big-integer");
 var checkfunctions = require('./checkfunctions');
 
 let wrapperFollowing = function(data,pool){
-  const poolhelper = pool;
+  var poolhelper = pool;
   //console.log(pool);
   return new Promise(async(res,rej)=>{
      cleanDataFollowing(data,async function(data1){
@@ -10,6 +10,7 @@ let wrapperFollowing = function(data,pool){
           //console.log(pool);
           insertDataFollowing(data2,poolhelper,async()=>{
             res(poolhelper);
+            return;
           })
         })
        });

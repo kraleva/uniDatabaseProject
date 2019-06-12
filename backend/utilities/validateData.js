@@ -9,7 +9,7 @@ var checkfunctions = require('./checkfunctions');
 const wrapperUser = require('./validateUser').wrapperUser;
 const wrapperTweet = require('./validateTweet').wrapperTweet;
 const wrapperFollowing = require('./validateFollowing').wrapperFollowing;
-const wrapperAdditional = require('./insertAdditionalInformation').wrapperAdditional;
+const iterator= require('./relationShipInsert').iterator;
 
  /*let filepath1 = path.join(rootpath,'/data/try/prj_tweet.csv');
  let content1 = fs.readFileSync(filepath, { encoding: 'utf-8' });
@@ -27,8 +27,8 @@ const validateData = async (pool)=>{
       let filepath2 = path.join(rootpath,'/data/try/prj_following.csv');
       let content2 = fs.readFileSync(filepath2, { encoding: 'utf-8' });
       return parseConent(content2,pool3,wrapperFollowing);
-    }).then((pool4)=>console.log(pool4));
-})
+    });
+});
 }
 
 let helperfunction = async(pool)=>{
